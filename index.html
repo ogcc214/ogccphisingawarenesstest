@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Security Alert</title>
+  <style>
+    body {
+      background-color: #1a1a1a;
+      color: #ff4d4d;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    .alert {
+      font-size: 24px;
+      font-weight: bold;
+      background-color: #ff0000;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 10px red; }
+      50% { box-shadow: 0 0 20px red; }
+      100% { box-shadow: 0 0 10px red; }
+    }
+    .info {
+      margin-top: 30px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="alert">⚠️ SECURITY ALERT: Your device may have been compromised</div>
+  <div class="info" id="info">Loading device info...</div>
+
+  <script>
+    fetch('https://ipinfo.io/json?token=YOUR_TOKEN')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('info').innerHTML = `
+          IP Address: ${data.ip}<br>
+          Location: ${data.city}, ${data.region}, ${data.country}<br>
+          ISP: ${data.org}<br>
+          Browser: ${navigator.userAgent}
+        `;
+      });
+
+    fetch('https://api.countapi.xyz/hit/phishing-awareness-test/visits')
+      .then(res => res.json())
+      .then(data => {
+        console.log("Visit count:", data.value); // Only visible to you
+      });
+  </script>
+</body>
+</html>
