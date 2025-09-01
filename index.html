@@ -29,15 +29,20 @@
       font-size: 18px;
       color: #ffcccc;
     }
+    .counter {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #cccccc;
+    }
   </style>
 </head>
 <body>
-  <div class="alert">⚠️ SECURITY ALERT!!: Your device may have been compromised</div>
+  <div class="alert">⚠️ SECURITY ALERT: Your device may have been compromised</div>
   <div class="info" id="info">Loading device info...</div>
+  <div class="counter" id="counter">Tracking access...</div>
 
   <script>
-    // Replace with your actual token from ipinfo.io
-    const token = "a5a0a559a33966";
+    const token = "a5a0a559a33966"; // Replace with your ipinfo.io token
 
     fetch(`https://ipinfo.io/json?token=${token}`)
       .then(response => response.json())
@@ -58,8 +63,13 @@
     fetch('https://api.countapi.xyz/hit/phishing-awareness-test/visits')
       .then(res => res.json())
       .then(data => {
-        console.log("Visit count:", data.value); // Only visible in browser console
+        document.getElementById('counter').innerHTML = `This page has been accessed ${data.value} times.`;
       });
+
+    // Redirect after 10 seconds
+    setTimeout(() => {
+      window.location.href = "facebook.com/OGCCOfficialPH/"; // Replace with your actual Facebook page
+    }, 5000); // 10 seconds
   </script>
 </body>
 </html>
