@@ -27,6 +27,7 @@
     .info {
       margin-top: 30px;
       font-size: 18px;
+      color: #ffcccc;
     }
   </style>
 </head>
@@ -35,21 +36,29 @@
   <div class="info" id="info">Loading device info...</div>
 
   <script>
-    fetch('https://ipinfo.io/json?token=YOUR_TOKEN')
+    // Replace with your actual token from ipinfo.io
+    const token = "YOUR_TOKEN_HERE";
+
+    fetch(`https://ipinfo.io/json?token=${token}`)
       .then(response => response.json())
       .then(data => {
         document.getElementById('info').innerHTML = `
-          IP Address: ${data.ip}<br>
-          Location: ${data.city}, ${data.region}, ${data.country}<br>
-          ISP: ${data.org}<br>
+          IP Address: ${data.ip || 'Unavailable'}<br>
+          Location: ${data.city || 'Unknown'}, ${data.region || ''}, ${data.country || ''}<br>
+          ISP: ${data.org || 'Unknown'}<br>
           Browser: ${navigator.userAgent}
         `;
+      })
+      .catch(error => {
+        document.getElementById('info').innerHTML = "Unable to retrieve device info.";
+        console.error("IP info error:", error);
       });
 
+    // Visit counter using CountAPI
     fetch('https://api.countapi.xyz/hit/phishing-awareness-test/visits')
       .then(res => res.json())
       .then(data => {
-        console.log("Visit count:", data.value); // Only visible to you
+        console.log("Visit count:", data.value); // Only visible in browser console
       });
   </script>
 </body>
